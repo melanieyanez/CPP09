@@ -6,7 +6,7 @@
 /*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 18:17:24 by melanieyane       #+#    #+#             */
-/*   Updated: 2024/06/09 18:52:42 by melanieyane      ###   ########.fr       */
+/*   Updated: 2024/06/13 09:04:10 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define RPN_HPP
 
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <stack>
 
@@ -27,7 +28,9 @@ class RPN
 
 		std::stack<int> getStack() const;
 		
-		void evaluate(const std::string &expression);
+		bool isOperator(char c);
+		int applyOperation(int a, int b, char op);
+		int evaluate(const std::string &expression);
 
 	private:
 		std::stack<int> _stack;
