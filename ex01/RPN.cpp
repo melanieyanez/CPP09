@@ -6,7 +6,7 @@
 /*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 18:17:33 by melanieyane       #+#    #+#             */
-/*   Updated: 2024/06/13 10:33:16 by melanieyane      ###   ########.fr       */
+/*   Updated: 2024/06/13 16:46:26 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,10 @@ int RPN::evaluate(const std::string &expression)
 		{
 			try
 			{
-				int num = std::stoi(token);
+				size_t pos;
+				int num = std::stoi(token, &pos);
+				if (pos != token.length())
+					throw std::runtime_error("Not a valid integer: " + token);
 				if (num < -9 || num > 9)
 					throw std::runtime_error("Token out of range: " + token);
 				this->_stack.push(num);
