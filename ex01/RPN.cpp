@@ -6,7 +6,7 @@
 /*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 18:17:33 by melanieyane       #+#    #+#             */
-/*   Updated: 2024/06/13 09:32:39 by melanieyane      ###   ########.fr       */
+/*   Updated: 2024/06/13 10:33:16 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ bool RPN::isOperator(char c)
 int RPN::applyOperation(int a, int b, char op)
 {	
 	long long result;
-	
+
 	switch (op)
 	{
 		case '+':
@@ -56,10 +56,10 @@ int RPN::applyOperation(int a, int b, char op)
 			result = static_cast<long long>(a) / static_cast<long long>(b);
 			break;
 	}
-			
+		
 	if (result < INT_MIN || result > INT_MAX)
-     	throw std::runtime_error("Result out of range for int");
-			
+		throw std::runtime_error("Result out of range for int");
+		
 	return static_cast<int>(result);
 }
 
@@ -86,7 +86,7 @@ int RPN::evaluate(const std::string &expression)
 			try
 			{
 				int num = std::stoi(token);
-				if (num < 0 || num > 10)
+				if (num < -9 || num > 9)
 					throw std::runtime_error("Token out of range: " + token);
 				this->_stack.push(num);
 			}
