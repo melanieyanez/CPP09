@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
+/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:15:38 by melanieyane       #+#    #+#             */
-/*   Updated: 2024/06/17 15:09:35 by melanieyane      ###   ########.fr       */
+/*   Updated: 2024/06/25 16:19:50 by myanez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
+#include <cstdlib>
+#include <limits>
 
 PmergeMe::PmergeMe(){}
 
@@ -18,18 +20,13 @@ PmergeMe::PmergeMe(int argc, char **argv)
 {
 	for (int i = 1; i < argc; ++i)
 	{
-		try
-		{
-			int num = std::atoi(argv[i]);
-			if (num <= 0)
-				throw std::runtime_error("Invalid input");
-			this->_vec.push_back(num);
-			this->_lst.push_back(num);
-		}
-		catch(const std::exception& e)
-		{
+		const char* str = argv[i];
+        char* end;
+		long num = std::strtol(str, &end, 10);
+		if (*end != '\0' || num <= 0 || num > std::numeric_limits<int>::max())
 			throw std::runtime_error("Invalid input");
-		}
+		this->_vec.push_back(static_cast<int>(num));
+		this->_lst.push_back(static_cast<int>(num));
 	}
 }
 
