@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   BitcoinExchange.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
+/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 12:37:40 by melanieyane       #+#    #+#             */
-/*   Updated: 2024/06/09 18:10:18 by melanieyane      ###   ########.fr       */
+/*   Updated: 2024/07/01 11:41:38 by myanez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
 #include <fstream>
 #include <sstream>
+#include <cstdlib>
 
 BitcoinExchange::BitcoinExchange(){}
 
@@ -36,7 +37,7 @@ void BitcoinExchange::printRates() const {
 }
 
 void	BitcoinExchange::loadRates(const std::string &filename){
-	std::ifstream file(filename);
+	std::ifstream file(filename.c_str());
 	if (!file.is_open()){
 		throw std::runtime_error("Error: could not open file " + filename);
 	}
@@ -56,7 +57,7 @@ void	BitcoinExchange::loadRates(const std::string &filename){
 			rateStr.erase(0, rateStr.find_first_not_of(" \n\r\t"));
 			if (!BitcoinExchange::validateDate(date, false) || !BitcoinExchange::validateValue(rateStr, false, false))
 				continue;
-			rate = std::atof(rateStr.c_str());
+			rate = atof(rateStr.c_str());
 			if (this->_rates.find(date) != this->_rates.end())
 				continue;
 			this->_rates.insert(std::pair<std::string, float>(date, rate));
@@ -90,9 +91,9 @@ bool	BitcoinExchange::validateDate(const std::string &date, bool errorDisplay) c
 		}
 	}
 
-	int year = std::atoi(date.substr(0, 4).c_str());
-	int month = std::atoi(date.substr(5, 2).c_str());
-	int day = std::atoi(date.substr(8, 2).c_str());
+	int year = atoi(date.substr(0, 4).c_str());
+	int month = atoi(date.substr(5, 2).c_str());
+	int day = atoi(date.substr(8, 2).c_str());
 
 	if (year < 1900 || year > 2099)
 	{
@@ -155,8 +156,10 @@ bool	BitcoinExchange::validateValue(const std::string &valueStr, bool errorDispl
 			if (decimalPointSeen)
 			{
 				if (errorDisplay)
+				{
 					std::cerr << "Error: multiple decimal points in value" << std::endl;
 					return false;
+				}
 			}
 			decimalPointSeen = true;
 		} 
@@ -174,7 +177,7 @@ bool	BitcoinExchange::validateValue(const std::string &valueStr, bool errorDispl
 		return false;
 	}
 
-	float value = std::atof(valueStr.c_str());
+	float value = atof(valueStr.c_str());
 	if (value > 1000 && upperLimit)
 	{
 		if (errorDisplay)
@@ -185,7 +188,7 @@ bool	BitcoinExchange::validateValue(const std::string &valueStr, bool errorDispl
 }
 
 void	BitcoinExchange::processFile(const std::string &filename){
-	std::ifstream file(filename);
+	std::ifstream file(filename.c_str());
 	if (!file.is_open())
 		throw std::runtime_error("Error: could not open file " + filename);
 	std::string line;
@@ -203,7 +206,7 @@ void	BitcoinExchange::processFile(const std::string &filename){
 			valueStr.erase(0, valueStr.find_first_not_of(" \n\r\t"));
 			if (!BitcoinExchange::validateDate(date, true) || !BitcoinExchange::validateValue(valueStr, true, true))
 				continue;
-			value = std::stof(valueStr);
+			value = atof(valueStr.c_str());
 			std::map<std::string, float>::iterator it = this->_rates.find(date);
 			if (it == this->_rates.end())
 			{

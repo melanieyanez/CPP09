@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   RPN.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
+/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 18:17:33 by melanieyane       #+#    #+#             */
-/*   Updated: 2024/06/13 16:46:26 by melanieyane      ###   ########.fr       */
+/*   Updated: 2024/07/01 11:36:45 by myanez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RPN.hpp"
+#include <limits>
+#include <cstdlib>
 
 RPN::RPN(){}
 
@@ -57,7 +59,7 @@ int RPN::applyOperation(int a, int b, char op)
 			break;
 	}
 		
-	if (result < INT_MIN || result > INT_MAX)
+	if (result < std::numeric_limits<int>::min() || result > std::numeric_limits<int>::max())
 		throw std::runtime_error("Result out of range for int");
 		
 	return static_cast<int>(result);
@@ -85,9 +87,9 @@ int RPN::evaluate(const std::string &expression)
 		{
 			try
 			{
-				size_t pos;
-				int num = std::stoi(token, &pos);
-				if (pos != token.length())
+				char *end;
+				int num = strtol(token.c_str(), &end, 10);
+				if (*end != '\0')
 					throw std::runtime_error("Not a valid integer: " + token);
 				if (num < -9 || num > 9)
 					throw std::runtime_error("Token out of range: " + token);
