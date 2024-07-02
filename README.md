@@ -18,7 +18,7 @@ This project is part of the 42 school curriculum and consists of three main exer
 Clone this repository to your local directory:
 
 ```sh
-git clone https://github.com/your-username/CPP09.git
+git clone https://github.com/melanieyanez/CPP09.git
 cd CPP09
 ```
 
@@ -81,7 +81,7 @@ The `PmergeMe` program sorts a sequence of positive integers using the "merge-in
 ./PmergeMe 3 5 9 7 4
 ```
 
-## Project Structure
+## Project structure
 
 ```
 .
@@ -111,7 +111,7 @@ The `PmergeMe` program sorts a sequence of positive integers using the "merge-in
 - **ex01**: Directory containing the code and files for exercise 01 (RPN).
 - **ex02**: Directory containing the code and files for exercise 02 (PmergeMe).
 
-## Implementation Details
+## Implementation details
 
 ### ex00 - BitcoinExchange
 
@@ -137,11 +137,6 @@ The `PmergeMe` program:
 1. Reads command line arguments to get the sequence of integers to sort.
 2. Sorts the sequence using the "merge-insert" algorithm for two different containers (`std::vector` and `std::list`).
 3. Displays the sorted sequence and the processing time for each container.
-
-### Features
-
-- **Error Handling**: The program handles errors related to file opening, value conversion, and expression evaluation.
-- **Performance**: The program measures the processing time for each container used in the sorting algorithm.
 
 ## Author
 
